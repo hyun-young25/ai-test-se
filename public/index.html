@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>인공지능의 이해 기말고사</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --danger: #dc2626;
+      --ok: #16a34a;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Pretendard", "Noto Sans KR", Arial, sans-serif;
+      background: linear-gradient(135deg, #eef4ff 0%, #f8fafc 60%, #f5f7fb 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      background: #0f172a;
+      color: white;
+      padding: 24px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+      letter-spacing: -0.04em;
+    }
+
+    header p {
+      margin: 8px 0 0;
+      color: #cbd5e1;
+      font-size: 14px;
+    }
+
+    .wrap {
+      width: min(1080px, 94vw);
+      margin: 28px auto 60px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    .login-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .section-title h2, .section-title h3 {
+      margin: 0;
+      letter-spacing: -0.04em;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin: 12px 0 6px;
+    }
+
+    input[type="text"], input[type="password"], input[type="number"], textarea {
+      width: 100%;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 15px;
+      outline: none;
+      background: #fff;
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+    }
+
+    textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    button {
+      border: none;
+      border-radius: 12px;
+      padding: 11px 16px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover { background: var(--primary-dark); }
+
+    .btn-sub {
+      background: #e0e7ff;
+      color: #1e3a8a;
+    }
+
+    .btn-ghost {
+      background: #f3f4f6;
+      color: #374151;
+    }
+
+    .btn-danger {
+      background: #fee2e2;
+      color: var(--danger);
+    }
+
+    .btn-ok {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .hidden { display: none !important; }
+
+    .notice {
+      background: #eff6ff;
+      border-left: 5px solid var(--primary);
+      padding: 14px 16px;
+      border-radius: 12px;
+      color: #1e3a8a;
+      margin-bottom: 18px;
+    }
+
+    .question {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 16px;
+      background: #fff;
+    }
+
+    .q-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .q-title {
+      font-size: 17px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+
+    .points {
+      white-space: nowrap;
+      font-size: 13px;
+      color: #475569;
+      background: #f1f5f9;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-weight: 800;
+    }
+
+    .options label {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      font-weight: 500;
+      margin: 8px 0;
+      padding: 8px 10px;
+      border-radius: 10px;
+    }
+
+    .options label:hover { background: #f8fafc; }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #f1f5f9;
+      color: #475569;
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      padding: 10px 8px;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f8fafc;
+      font-weight: 900;
+      color: #334155;
+    }
+
+    .small {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .admin-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .answer-box {
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 10px;
+      white-space: pre-wrap;
+    }
+
+    .result-card {
+      border: 1px solid #bbf7d0;
+      background: #f0fdf4;
+      color: #14532d;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      z-index: 20;
+    }
+
+    .modal-content {
+      width: min(820px, 96vw);
+      max-height: 90vh;
+      overflow: auto;
+      background: white;
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    }
+
+    @media (max-width: 760px) {
+      .login-grid { grid-template-columns: 1fr; }
+      header h1 { font-size: 23px; }
+      .card { padding: 18px; }
+      table { font-size: 12px; }
+      th, td { padding: 8px 5px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>인공지능의 이해 기말고사</h1>
+    <p>객관식 10문항 · 단답형 1문항 · 서술형 1문항</p>
+  </header>
+
+  <main class="wrap">
+    <section id="loginPage" class="card">
+      <div class="section-title">
+        <h2>응시 / 관리자 로그인</h2>
+        <span class="pill">학생 응시 / 관리자 확인</span>
+      </div>
+
+      <div class="login-grid">
+        <div class="card" style="box-shadow:none; margin:0;">
+          <h3>학생 응시</h3>
+          <p class="small">학번과 이름을 입력한 뒤 시험을 시작하세요.</p>
+          <label for="studentId">학번</label>
+          <input id="studentId" type="text" placeholder="예: 20260001" autocomplete="off" />
+          <label for="studentName">이름</label>
+          <input id="studentName" type="text" placeholder="예: 홍길동" autocomplete="off" />
+          <button class="btn-primary" style="margin-top:14px;" onclick="startExam()">시험 시작</button>
+        </div>
+
+        <div class="card" style="box-shadow:none; margin:0;">
+          <h3>관리자</h3>
+          <p class="small">제출 현황 확인, 서술형 점수 입력, CSV 다운로드가 가능합니다.</p>
+          <label for="adminId">아이디</label>
+          <input id="adminId" type="text" placeholder="관리자 아이디" autocomplete="off" />
+          <label for="adminPw">비밀번호</label>
+          <input id="adminPw" type="password" placeholder="관리자 비밀번호" autocomplete="off" />
+          <button class="btn-sub" style="margin-top:14px;" onclick="adminLogin()">관리자 로그인</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="examPage" class="hidden">
+      <div class="topbar">
+        <div>
+          <h2 style="margin:0;">시험 문제</h2>
+          <p id="studentInfo" class="small" style="margin:4px 0 0;"></p>
+        </div>
+        <button class="btn-ghost" onclick="goHome()">처음으로</button>
+      </div>
+
+      <div class="notice">
+        객관식은 하나의 정답만 선택하세요. 12번 서술형은 관리자가 별도로 확인하여 점수를 입력합니다.
+      </div>
+
+      <form id="examForm">
+        <div id="questions"></div>
+        <div class="card" style="box-shadow:none;">
+          <button type="button" class="btn-primary" onclick="submitExam()">답안 제출</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="resultPage" class="hidden card result-card">
+      <h2>제출이 완료되었습니다.</h2>
+      <p id="resultText">답안 제출이 정상적으로 완료되었습니다.</p>
+      <p class="small">담당 교수자의 안내에 따라 대기하거나 퇴실하세요.</p>
+      <button class="btn-primary" onclick="goHome()">확인</button>
+    </section>
+
+    <section id="adminPage" class="hidden">
+      <div class="topbar">
+        <div>
+          <h2 style="margin:0;">관리자 화면</h2>
+          <p class="small" style="margin:4px 0 0;">학생 제출 현황을 서버 DB에서 불러옵니다.</p>
+        </div>
+        <div class="admin-actions">
+          <button class="btn-ok" onclick="downloadCSV()">CSV 다운로드</button>
+          <button class="btn-danger" onclick="clearSubmissions()">전체 삭제</button>
+          <button class="btn-ghost" onclick="goHome()">로그아웃</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">
+          <h3>제출 목록</h3>
+          <span id="submitCount" class="pill">0명 제출</span>
+        </div>
+        <div style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>제출일시</th>
+                <th>학번</th>
+                <th>이름</th>
+                <th>자동점수</th>
+                <th>서술형</th>
+                <th>총점</th>
+                <th>상세</th>
+              </tr>
+            </thead>
+            <tbody id="submissionTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>정답표</h3>
+        <p class="small">
+          객관식 정답: 1-②, 2-①, 3-③, 4-③, 5-①, 6-④, 7-②, 8-①, 9-③, 10-④ / 11번 정답: 픽셀
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <div id="detailModal" class="modal hidden">
+    <div class="modal-content">
+      <div class="section-title">
+        <h3 id="modalTitle">상세 답안</h3>
+        <button class="btn-ghost" onclick="closeModal()">닫기</button>
+      </div>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <script>
+    const examQuestions = [
+      {
+        id: "q1",
+        type: "mc",
+        points: 7,
+        question: "1. 다음 중 인공지능, 머신러닝, 딥러닝의 포함 관계를 가장 바르게 설명한 것은?",
+        options: [
+          "① 딥러닝이 가장 넓은 개념이고, 그 안에 인공지능이 포함된다.",
+          "② 인공지능 안에 머신러닝이 있고, 머신러닝 안에 딥러닝이 포함된다.",
+          "③ 머신러닝과 딥러닝은 인공지능과 관련이 없는 별개의 기술이다.",
+          "④ 인공지능은 딥러닝의 한 종류이며, 머신러닝보다 좁은 개념이다."
+        ]
+      },
+      {
+        id: "q2",
+        type: "mc",
+        points: 7,
+        question: "2. 스팸 메일 분류처럼 입력 데이터와 정답 레이블을 함께 이용해 학습하는 방법은?",
+        options: [
+          "① 지도학습",
+          "② 비지도학습",
+          "③ 강화학습",
+          "④ 규칙기반 학습"
+        ]
+      },
+      {
+        id: "q3",
+        type: "mc",
+        points: 7,
+        question: "3. 훈련 데이터에서는 성능이 좋지만, 처음 보는 데이터에서는 성능이 떨어지는 문제를 무엇이라고 하는가?",
+        options: [
+          "① 정규화",
+          "② 데이터 수집",
+          "③ 과적합",
+          "④ 토큰화"
+        ]
+      },
+      {
+        id: "q4",
+        type: "mc",
+        points: 7,
+        question: "4. ChatGPT와 같은 LLM이 문장을 이어서 생성할 때 사용하는 기본 방식으로 가장 적절한 것은?",
+        options: [
+          "① 저장된 문장을 항상 그대로 복사한다.",
+          "② 이미지를 먼저 분석한 뒤 색상값을 바꾼다.",
+          "③ 이전 문맥을 참고하여 다음에 올 토큰을 예측한다.",
+          "④ 사람의 목소리를 녹음해 두었다가 재생한다."
+        ]
+      },
+      {
+        id: "q5",
+        type: "mc",
+        points: 7,
+        question: "5. 규칙 기반 인공지능 시스템에 대한 설명으로 가장 알맞은 것은?",
+        options: [
+          "① 사람이 조건과 행동을 IF-THEN 형태의 규칙으로 설계한다.",
+          "② 많은 데이터를 넣으면 스스로 규칙을 찾아 항상 학습한다.",
+          "③ 반드시 CNN과 같은 딥러닝 구조를 사용해야 한다.",
+          "④ 이미지를 자동으로 확대하는 기술만을 의미한다."
+        ]
+      },
+      {
+        id: "q6",
+        type: "mc",
+        points: 7,
+        question: "6. 깊이 우선 탐색(DFS)의 진행 방식으로 옳은 것은?",
+        options: [
+          "① 가까운 깊이의 노드들을 먼저 모두 확인한다.",
+          "② 보상을 가장 많이 주는 행동만 반복해서 선택한다.",
+          "③ 모든 노드를 무작위 순서로만 방문한다.",
+          "④ 한 갈래로 가능한 깊게 들어간 뒤 막히면 되돌아온다."
+        ]
+      },
+      {
+        id: "q7",
+        type: "mc",
+        points: 7,
+        question: "7. 휴리스틱 탐색에 대한 설명으로 가장 적절한 것은?",
+        options: [
+          "① 아무런 단서 없이 모든 경우를 같은 방식으로 탐색한다.",
+          "② 경험이나 추정 정보를 활용하여 목표에 가까운 방향을 우선 탐색한다.",
+          "③ 이미지를 흑백으로 변환하는 전처리 방법이다.",
+          "④ 유튜브 댓글을 자동으로 수집하는 프로그램이다."
+        ]
+      },
+      {
+        id: "q8",
+        type: "mc",
+        points: 7,
+        question: "8. 0부터 255까지의 값으로 밝기를 표현하는 흑백 이미지에서 값이 255에 가까울수록 어떤 색에 가까운가?",
+        options: [
+          "① 흰색",
+          "② 검은색",
+          "③ 초록색",
+          "④ 파란색"
+        ]
+      },
+      {
+        id: "q9",
+        type: "mc",
+        points: 7,
+        question: "9. ReLU 활성화 함수 f(x)=max(0, x)의 특징으로 옳은 것은?",
+        options: [
+          "① 모든 입력값을 무조건 1로 바꾼다.",
+          "② 양수 값을 모두 제거하고 음수만 남긴다.",
+          "③ 0보다 작은 값은 0으로 만들고, 양수 값은 그대로 남긴다.",
+          "④ 문장을 단어 단위로 나누는 역할만 한다."
+        ]
+      },
+      {
+        id: "q10",
+        type: "mc",
+        points: 7,
+        question: "10. 영화나 상품 추천에서 협업 필터링에 가까운 원리는?",
+        options: [
+          "① 상품 이미지의 색상만 비교하여 추천한다.",
+          "② 물체의 위치를 바운딩박스로 표시한다.",
+          "③ 사용자가 입력한 비밀번호 길이만 확인한다.",
+          "④ 나와 취향이 비슷한 사용자가 선호한 항목을 추천에 활용한다."
+        ]
+      },
+      {
+        id: "q11",
+        type: "short",
+        points: 10,
+        question: "11. [단답형] 사진이나 그림 파일을 확대하면 작은 네모 칸처럼 보이는 기본 단위들이 모여 이미지를 구성합니다. 이러한 디지털 이미지의 가장 작은 기본 단위를 무엇이라고 하나요?"
+      },
+      {
+        id: "q12",
+        type: "essay",
+        points: 20,
+        question: "12. [서술형] 수업시간에 AI 자동화 프로그램으로 그림판을 활용하여 이미지를 자동으로 그려주는 프로그램을 만들어 보았습니다. 실제 여러분과 관련하여 어떤 자동화 프로그램을 만들 수 있을지 작성하세요. 어떤 데이터를 입력하고, 무엇을 출력할 것인지, 이를 통해 어떤 업무나 일상의 효율화를 가져올 수 있을지 구체적으로 작성하세요."
+      }
+    ];
+
+    let currentStudent = null;
+    let adminAuthHeader = null;
+    let cachedSubmissions = [];
+
+    function makeBasicAuth(id, pw) {
+      return "Basic " + btoa(unescape(encodeURIComponent(id + ":" + pw)));
+    }
+
+    function goHome() {
+      currentStudent = null;
+      adminAuthHeader = null;
+      document.getElementById("loginPage").classList.remove("hidden");
+      document.getElementById("examPage").classList.add("hidden");
+      document.getElementById("resultPage").classList.add("hidden");
+      document.getElementById("adminPage").classList.add("hidden");
+      document.getElementById("studentId").value = "";
+      document.getElementById("studentName").value = "";
+      document.getElementById("adminId").value = "";
+      document.getElementById("adminPw").value = "";
+      closeModal();
+    }
+
+    function startExam() {
+      const studentId = document.getElementById("studentId").value.trim();
+      const studentName = document.getElementById("studentName").value.trim();
+
+      if (!studentId || !studentName) {
+        alert("학번과 이름을 모두 입력하세요.");
+        return;
+      }
+
+      const confirmed = confirm(
+        `입력한 정보가 맞습니까?\n\n학번: ${studentId}\n이름: ${studentName}\n\n정보가 맞으면 확인을 눌러 시험을 시작하세요.`
+      );
+
+      if (!confirmed) {
+        alert("학번과 이름을 다시 확인한 뒤 시험을 시작하세요.");
+        return;
+      }
+
+      currentStudent = { studentId, studentName };
+      document.getElementById("studentInfo").textContent = `응시자: ${studentId} ${studentName}`;
+      renderQuestions();
+
+      document.getElementById("loginPage").classList.add("hidden");
+      document.getElementById("examPage").classList.remove("hidden");
+      document.getElementById("resultPage").classList.add("hidden");
+      document.getElementById("adminPage").classList.add("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function renderQuestions() {
+      const box = document.getElementById("questions");
+      box.innerHTML = "";
+
+      examQuestions.forEach(q => {
+        const div = document.createElement("div");
+        div.className = "question";
+
+        const head = document.createElement("div");
+        head.className = "q-head";
+        head.innerHTML = `<div class="q-title">${q.question}</div><div class="points">${q.points}점</div>`;
+        div.appendChild(head);
+
+        if (q.type === "mc") {
+          const optBox = document.createElement("div");
+          optBox.className = "options";
+          q.options.forEach(opt => {
+            const value = opt.slice(0, 1);
+            const label = document.createElement("label");
+            label.innerHTML = `<input type="radio" name="${q.id}" value="${value}"> <span>${opt}</span>`;
+            optBox.appendChild(label);
+          });
+          div.appendChild(optBox);
+        }
+
+        if (q.type === "short") {
+          const input = document.createElement("input");
+          input.type = "text";
+          input.name = q.id;
+          input.placeholder = "정답을 입력하세요.";
+          div.appendChild(input);
+        }
+
+        if (q.type === "essay") {
+          const textarea = document.createElement("textarea");
+          textarea.name = q.id;
+          textarea.placeholder = "자동화 프로그램 아이디어, 입력 데이터, 출력 결과, 효율화되는 점을 작성하세요.";
+          div.appendChild(textarea);
+        }
+
+        box.appendChild(div);
+      });
+    }
+
+    function getAnswerValue(q) {
+      if (q.type === "mc") {
+        const selected = document.querySelector(`input[name="${q.id}"]:checked`);
+        return selected ? selected.value : "";
+      }
+      const field = document.querySelector(`[name="${q.id}"]`);
+      return field ? field.value.trim() : "";
+    }
+
+    async function submitExam() {
+      if (!currentStudent) {
+        alert("학생 정보가 없습니다. 처음부터 다시 진행하세요.");
+        goHome();
+        return;
+      }
+
+      const answers = {};
+      examQuestions.forEach(q => answers[q.id] = getAnswerValue(q));
+
+      const unansweredRequired = examQuestions
+        .filter(q => q.type !== "essay")
+        .some(q => !answers[q.id]);
+
+      if (unansweredRequired) {
+        alert("객관식과 단답형 문항을 모두 작성하세요.");
+        return;
+      }
+
+      if (!answers.q12 || answers.q12.length < 20) {
+        const ok = confirm("12번 서술형 답안이 짧거나 비어 있습니다. 그대로 제출할까요?");
+        if (!ok) return;
+      }
+
+      try {
+        const res = await fetch("/api/submissions", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            studentId: currentStudent.studentId,
+            studentName: currentStudent.studentName,
+            answers
+          })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok || !data.ok) {
+          alert(data.message || "제출 중 오류가 발생했습니다.");
+          return;
+        }
+
+        document.getElementById("examPage").classList.add("hidden");
+        document.getElementById("resultPage").classList.remove("hidden");
+        document.getElementById("resultText").textContent = "답안 제출이 정상적으로 완료되었습니다.";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } catch (err) {
+        alert("서버 연결에 실패했습니다. 인터넷 연결을 확인한 뒤 다시 제출하세요.");
+      }
+    }
+
+    async function adminLogin() {
+      const id = document.getElementById("adminId").value.trim();
+      const pw = document.getElementById("adminPw").value.trim();
+
+      if (!id || !pw) {
+        alert("관리자 아이디와 비밀번호를 입력하세요.");
+        return;
+      }
+
+      adminAuthHeader = makeBasicAuth(id, pw);
+
+      const ok = await loadSubmissions();
+
+      if (ok) {
+        document.getElementById("loginPage").classList.add("hidden");
+        document.getElementById("adminPage").classList.remove("hidden");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        adminAuthHeader = null;
+      }
+    }
+
+    async function loadSubmissions() {
+      try {
+        const res = await fetch("/api/submissions", {
+          headers: { "Authorization": adminAuthHeader }
+        });
+
+        const data = await res.json();
+
+        if (!res.ok || !data.ok) {
+          alert(data.message || "관리자 로그인에 실패했습니다.");
+          return false;
+        }
+
+        cachedSubmissions = data.submissions || [];
+        renderAdmin();
+        return true;
+      } catch (err) {
+        alert("서버에서 제출 목록을 불러오지 못했습니다.");
+        return false;
+      }
+    }
+
+    function renderAdmin() {
+      const tbody = document.getElementById("submissionTable");
+      const count = document.getElementById("submitCount");
+
+      count.textContent = `${cachedSubmissions.length}명 제출`;
+      tbody.innerHTML = "";
+
+      if (cachedSubmissions.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="small">아직 제출된 답안이 없습니다.</td></tr>`;
+        return;
+      }
+
+      cachedSubmissions.forEach(item => {
+        const tr = document.createElement("tr");
+        const essayScoreText = item.essay_score === null || item.essay_score === undefined ? "미입력" : `${item.essay_score}점`;
+        const total = Number(item.total_score || 0);
+        const submittedAt = new Date(item.submitted_at).toLocaleString("ko-KR");
+        tr.innerHTML = `
+          <td>${submittedAt}</td>
+          <td>${escapeHTML(item.student_id)}</td>
+          <td>${escapeHTML(item.student_name)}</td>
+          <td>${item.auto_score} / 80</td>
+          <td>${essayScoreText} / 20</td>
+          <td><b>${total} / 100</b></td>
+          <td>
+            <button class="btn-sub" onclick="openDetail('${item.id}')">보기</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function openDetail(id) {
+      const item = cachedSubmissions.find(x => String(x.id) === String(id));
+      if (!item) return;
+
+      document.getElementById("modalTitle").textContent = `${item.student_id} ${item.student_name} 상세 답안`;
+
+      let html = `
+        <p class="small">제출일시: ${new Date(item.submitted_at).toLocaleString("ko-KR")}</p>
+        <div class="notice">
+          자동점수: <b>${item.auto_score} / 80</b>　
+          서술형 점수:
+          <input id="essayScoreInput" type="number" min="0" max="20" value="${item.essay_score ?? ""}" style="width:90px; display:inline-block; padding:7px 8px;"> / 20
+          <button class="btn-primary" onclick="saveEssayScore('${item.id}')">점수 저장</button>
+        </div>
+      `;
+
+      examQuestions.forEach(q => {
+        const userAnswer = (item.answers || {})[q.id] || "";
+        let correctText = "";
+
+        if (q.type === "mc") {
+          correctText = `<p class="small">학생 답: <b>${escapeHTML(userAnswer || "미응답")}</b></p>`;
+        }
+
+        if (q.type === "short") {
+          correctText = `<p class="small">정답: <b>픽셀</b> / 학생 답: <b>${escapeHTML(userAnswer || "미응답")}</b></p>`;
+        }
+
+        if (q.type === "essay") {
+          correctText = `<p class="small">서술형은 관리자가 직접 점수를 입력합니다.</p>`;
+        }
+
+        html += `
+          <div class="question">
+            <div class="q-head">
+              <div class="q-title">${q.question}</div>
+              <div class="points">${q.points}점</div>
+            </div>
+            ${correctText}
+            <div class="answer-box">${escapeHTML(userAnswer || "미응답")}</div>
+          </div>
+        `;
+      });
+
+      document.getElementById("modalBody").innerHTML = html;
+      document.getElementById("detailModal").classList.remove("hidden");
+    }
+
+    async function saveEssayScore(id) {
+      const input = document.getElementById("essayScoreInput");
+      let score = Number(input.value);
+
+      if (Number.isNaN(score) || score < 0 || score > 20) {
+        alert("서술형 점수는 0점부터 20점 사이로 입력하세요.");
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/submissions/${id}/essay`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": adminAuthHeader
+          },
+          body: JSON.stringify({ essayScore: score })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok || !data.ok) {
+          alert(data.message || "점수 저장 중 오류가 발생했습니다.");
+          return;
+        }
+
+        alert("서술형 점수가 저장되었습니다.");
+        closeModal();
+        await loadSubmissions();
+        openDetail(id);
+      } catch (err) {
+        alert("서버 연결에 실패했습니다.");
+      }
+    }
+
+    function closeModal() {
+      document.getElementById("detailModal").classList.add("hidden");
+    }
+
+    function downloadCSV() {
+      if (!adminAuthHeader) {
+        alert("관리자 로그인이 필요합니다.");
+        return;
+      }
+
+      fetch("/api/submissions.csv", {
+        headers: { "Authorization": adminAuthHeader }
+      })
+        .then(res => {
+          if (!res.ok) throw new Error("CSV 다운로드 실패");
+          return res.blob();
+        })
+        .then(blob => {
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "인공지능의이해_기말고사_제출현황.csv";
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        })
+        .catch(() => alert("CSV 다운로드 중 오류가 발생했습니다."));
+    }
+
+    async function clearSubmissions() {
+      const ok = confirm("제출된 모든 답안을 서버 DB에서 삭제할까요? 삭제 후 복구할 수 없습니다.");
+      if (!ok) return;
+
+      try {
+        const res = await fetch("/api/submissions", {
+          method: "DELETE",
+          headers: { "Authorization": adminAuthHeader }
+        });
+
+        const data = await res.json();
+
+        if (!res.ok || !data.ok) {
+          alert(data.message || "삭제 중 오류가 발생했습니다.");
+          return;
+        }
+
+        await loadSubmissions();
+      } catch (err) {
+        alert("서버 연결에 실패했습니다.");
+      }
+    }
+
+    function escapeHTML(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+  </script>
+</body>
+</html>
